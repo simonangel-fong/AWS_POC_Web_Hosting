@@ -14,30 +14,36 @@ This project serves as a proof of concept for hosting a static website on Amazon
     - [3. GitHub Actions](#3-github-actions)
   - [Usage](#usage)
 
+---
+
 ## Overview
 
 This project demonstrates how to host a static website on Amazon S3 and associate it with a custom domain using Route 53. GitHub Actions automate the process of deploying changes to the S3 bucket whenever updates are pushed to the repository.
 
+---
+
 ## Prerequisites
 
-Before you begin, ensure you have the following in place:
+Ensure have the following in place:
 
 - An AWS account with necessary permissions to create and manage S3 buckets and Route 53 hosted zones.
 - A registered domain on Route 53 or another DNS provider.
-- GitHub repository containing your static website files.
+- GitHub repository containing static website files.
+
+---
 
 ## Setup
 
 ### 1. Amazon S3 Configuration
 
-- Create an S3 bucket to store your static website files.
+- Create an S3 bucket to store static website files.
 
 ![s3](./pic/s3bucket01.png)
 
 - Configure the bucket for static website hosting.
   - Enable versioning
   - Unblock public access
-  - update policy
+  - Update policy
   - Enable static web hosting
 
 ![s3](./pic/s3bucket02.png)
@@ -52,7 +58,7 @@ Before you begin, ensure you have the following in place:
 
 ### 2. Route 53 Configuration
 
-- Create a hosted zone for your domain on Route 53.
+- Create a hosted zone for domain on Route 53.
 - Update the domain's nameservers to those provided by Route 53.
 
 ![route5301](./pic/route5301.png)
@@ -99,7 +105,7 @@ jobs:
         run: aws s3 sync ./web_files/ s3://test.arguswatcher.net --delete
 ```
 
-- Define secrets in your repository for AWS credentials to enable secure communication with your AWS resources.
+- Define secrets in repository for AWS credentials to enable secure communication with AWS resources.
 
 ![action](./pic/GithubAction01.png)
 
@@ -133,6 +139,8 @@ jobs:
 
 6. Commit and push
 7. Check update on Domain Name
+
+   ![verify](./pic/verify03.png)
 
 ---
 
