@@ -1,0 +1,30 @@
+# Action name
+name: Upload Website
+
+# condition
+# whenever push on the master branch
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+        # use the AWS CLI
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        # fetches values from the secrets
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          # along with bucket name
+          aws-region: us-east-1
+
+      - name: Deploy static site to S3 bucket
+        # aws s3 sync: Recursively copies new and updated files from the source directory to the destination
+        # ensure the target bucket name is correct
+        run: aws s3 sync ./web_files/ s3://test.arguswatcher.net --delete
